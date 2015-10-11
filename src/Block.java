@@ -12,7 +12,7 @@ public class Block {
 
 	public Block(String name) {
 		this.setName(name);
-		
+
 		// Init places
 		this.setPlace1(-1);
 		this.setPlace2(-1);
@@ -56,7 +56,8 @@ public class Block {
 	}
 
 	/**
-	 * @param lowerBlock the lowerBlock to set
+	 * @param lowerBlock
+	 *            the lowerBlock to set
 	 */
 	public void setLowerBlock(Block lowerBlock) {
 		this.lowerBlock = lowerBlock;
@@ -100,13 +101,14 @@ public class Block {
 	public void move(Environment environment) {
 		if (!this.isSatisfied() && this.isFree()) {
 			int max = environment.getStacks().size();
-			
+
 			Random rand = new Random();
 			int randStack = rand.nextInt(max + 1);
-			
+
 			environment.moveBlock(this, randStack);
 		}
 	}
+
 	/**
 	 * 
 	 */
@@ -123,7 +125,8 @@ public class Block {
 	}
 
 	/**
-	 * @param isPushed the isPushed to set
+	 * @param isPushed
+	 *            the isPushed to set
 	 */
 	public void setPushed(boolean isPushed) {
 		this.isPushed = isPushed;
@@ -137,7 +140,8 @@ public class Block {
 	}
 
 	/**
-	 * @param isFree the isFree to set
+	 * @param isFree
+	 *            the isFree to set
 	 */
 	public void setFree(boolean isFree) {
 		this.isFree = isFree;
@@ -151,7 +155,8 @@ public class Block {
 	}
 
 	/**
-	 * @param place1 the place1 to set
+	 * @param place1
+	 *            the place1 to set
 	 */
 	public void setPlace1(int place1) {
 		this.place1 = place1;
@@ -165,7 +170,8 @@ public class Block {
 	}
 
 	/**
-	 * @param place2 the place2 to set
+	 * @param place2
+	 *            the place2 to set
 	 */
 	public void setPlace2(int place2) {
 		this.place2 = place2;
