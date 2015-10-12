@@ -104,6 +104,12 @@ public class Block {
 
 			Random rand = new Random();
 			int randStack = rand.nextInt(max + 1);
+			
+			if(randStack == 0) {
+				randStack = this.place1;
+			} else {
+				randStack = this.place2;
+			}
 
 			environment.moveBlock(this, randStack);
 		}

@@ -70,14 +70,18 @@ public class Environment {
 					block.setFree(true);
 					block.setPushed(true);
 				}
-
+				
 				// Actions
 				if (currentBlock.isPushed()) {
 					currentBlock.push(this);
 				}
+				
+				if (currentBlock.isFree()) {
+					currentBlock.move(this);
+				}
 			}
 		}
-
+		
 		this.render();
 	}
 
@@ -85,8 +89,13 @@ public class Environment {
 	 * 
 	 */
 	public void moveBlock(Block block, int toStack) {
-		// int blockIndex = this.locateBlock(block);
-
+		int blockIndex = this.locateBlock(block);
+		for (int i = 0; i < this.getStacks().get(blockIndex).getBlocks().size(); i++) {
+			if(this.getStacks().get(blockIndex).getBlocks().get(i).getName() == block.getName()){
+				this.getStacks().get(blockIndex).getBlocks().remove(i);
+			}
+		}
+		
 		this.getStacks().get(toStack).addBlock(block);
 	}
 
