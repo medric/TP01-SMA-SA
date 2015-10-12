@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * 
@@ -15,17 +16,28 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// Init base
-		Environment environment = new Environment(initSMA(3));
-		
-		for (int i = 0; i < environment.getStacks().size(); i++) {
-			for (int j = environment.getStacks().get(i).getBlocks().size() - 1; j >= 0; j--) {
-				System.out.println("\nlog bloc : " + environment.getStacks().get(i).getBlocks().get(j).getName());
-				environment.applyPerception(environment.getStacks().get(i).getBlocks().get(j));
-			}
+		Environment environment = initSMA(3);
+		System.out.println("---Init---");
+
+		for (int k = 0; k < 1000; k++) {
+			Random rand = new Random();
+			int randStack = rand.nextInt(environment.getAgents().size());
+			environment.applyPerception(environment.getAgents().get(randStack));
 		}
+
+		/*
+		 * for (int k = 0; k < 10; k++) { System.out.println("\n--- Tour : " + k
+		 * + " ---"); for (int i = 0; i < environment.getStacks().size(); i++) {
+		 * for (int j = environment.getStacks().get(i).getBlocks().size() - 1; j
+		 * >= 0; j--) { System.out.println("\nlog bloc : " +
+		 * environment.getStacks().get(i).getBlocks().get(j).getName());
+		 * environment.applyPerception(environment.getStacks().get(i).getBlocks(
+		 * ).get(j)); } } }
+		 */
 	}
 
-	public static ArrayList<Stack> initSMA(int nbStacks) {
+	public static Environment initSMA(int nbStacks) {
+
 		// Init 4 blocks
 		Block block1 = new Block("A");
 		Block block2 = new Block("B");
@@ -55,11 +67,13 @@ public class Main {
 
 		for (int i = 1; i < nbStacks; i++) {
 			Stack stack = new Stack(new ArrayList<Block>(4));
-		
+
 			// Empty
 			stacks.add(stack);
 		}
 
-		return stacks;
+		Environment e = new Environment(stacks);
+
+		return e;
 	}
 }

@@ -83,11 +83,23 @@ public class Block {
 	 * @return
 	 */
 	public boolean isSatisfied() {
-		if(this.lowerBlock == null) {
+		/*if(this.lowerBlock == null) {
 			return true;
 		}
 		
-		return this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed();
+		return this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed();*/
+		boolean satisfied = false;
+		
+		if(this.lowerBlock == null && this.lowerTargetBlock == null) {
+			satisfied = true;
+		}
+		if(this.lowerBlock != null) {
+			if(this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed()) {
+				satisfied = true;
+			}
+		}
+		
+		return satisfied;
 	}
 
 	/**
