@@ -17,12 +17,10 @@ public class Main {
 		// Init base
 		Environment environment = new Environment(initSMA(3));
 		
-		for (int k = 0; k < 2; k++) {
-			for (int i = 0; i < environment.getStacks().size(); i++) {
-				for (int j = environment.getStacks().get(i).getBlocks().size() - 1; j >= 0; j--) {
-					System.out.println("\nlog bloc : " + environment.getStacks().get(i).getBlocks().get(j).getName());
-					environment.applyPerception(environment.getStacks().get(i).getBlocks().get(j));
-				}
+		for (int i = 0; i < environment.getStacks().size(); i++) {
+			for (int j = environment.getStacks().get(i).getBlocks().size() - 1; j >= 0; j--) {
+				System.out.println("\nlog bloc : " + environment.getStacks().get(i).getBlocks().get(j).getName());
+				environment.applyPerception(environment.getStacks().get(i).getBlocks().get(j));
 			}
 		}
 	}
@@ -40,7 +38,7 @@ public class Main {
 		block3.setLowerTargetBlock(block1);
 		block4.setLowerTargetBlock(block3);
 
-		ArrayList<Block> blocks = new ArrayList<Block>();
+		ArrayList<Block> blocks = new ArrayList<Block>(4);
 
 		// Add blocks to stack
 		blocks.add(block4);
@@ -48,7 +46,7 @@ public class Main {
 		blocks.add(block2);
 		blocks.add(block1);
 
-		ArrayList<Stack> stacks = new ArrayList<Stack>();
+		ArrayList<Stack> stacks = new ArrayList<Stack>(3);
 
 		Stack firstStack = new Stack(blocks);
 
@@ -56,8 +54,10 @@ public class Main {
 		stacks.add(firstStack);
 
 		for (int i = 1; i < nbStacks; i++) {
+			Stack stack = new Stack(new ArrayList<Block>(4));
+		
 			// Empty
-			stacks.add(new Stack(new ArrayList<Block>()));
+			stacks.add(stack);
 		}
 
 		return stacks;

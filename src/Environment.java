@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Environment {
@@ -33,24 +32,13 @@ public class Environment {
 	 * @param block
 	 */
 	public void applyPerception(Block block) {
-		int blockIndex = this.locateBlock(block);
-
-		// TODO : Réinitialiser à chaque fois les getPlace à -1 ?
+		setBlockPlaces(block);
 		
 		for (int i = 0; i < this.stacks.size(); i++) {
-			
-			if (i != blockIndex && !Integer.valueOf(-1).equals(block.getPlace1())) {
-				block.setPlace2(i);
-			}
-			
-			if (i != blockIndex && Integer.valueOf(-1).equals(block.getPlace1())) {
-				block.setPlace1(i);
-			}
-
 			for (int j = this.stacks.get(i).getBlocks().size() - 1; j >= 0; j--) {
 				// Current block
 				Block currentBlock = this.stacks.get(i).getBlocks().get(j);
-
+				
 				// Try to set lower block
 				try {
 					currentBlock.setLowerBlock(this.stacks.get(i).getBlocks().get(j - 1));
@@ -61,25 +49,26 @@ public class Environment {
 
 				// Try to set upper block
 				try {
+				
 					currentBlock.setUpperBlock(this.stacks.get(i).getBlocks().get(j + 1));
-					block.setFree(false);
-					block.setPushed(false);
+					currentBlock.setFree(false);
+					currentBlock.setPushed(true);
 				} catch (Exception e) {
 					//
 					currentBlock.setUpperBlock(null);
-					block.setFree(true);
-					block.setPushed(true);
-				}
-				
-				// Actions
-				if (currentBlock.isPushed()) {
-					currentBlock.push(this);
-				}
-				
-				if (currentBlock.isFree()) {
-					currentBlock.move(this);
+					currentBlock.setFree(true);
+					currentBlock.setPushed(false);
 				}
 			}
+		}
+		
+		// Actions
+		if (block.isPushed()) {
+			block.push(this);
+		}
+		
+		if (block.isFree()) {
+			block.move(this);
 		}
 		
 		this.render();
@@ -100,7 +89,7 @@ public class Environment {
 	}
 
 	/**
-	 * 
+	 * Give a block position stack
 	 */
 	public int locateBlock(Block block) {
 		int index = -1;
@@ -117,7 +106,28 @@ public class Environment {
 		}
 		return index;
 	}
-
+	
+	/**
+	 * 
+	 * @param block
+	 */
+	private void setBlockPlaces(Block block) {
+		int blockIndex = this.locateBlock(block);
+		int[] places = new int[2];
+		int cursor = 0;
+		
+		for(int i = 0; i < this.stacks.size(); i++) {
+			if(i != blockIndex) {
+				places[cursor] = i;
+				cursor++;
+			}
+		}
+		
+		// Set places
+		block.setPlace1(places[0]);
+		block.setPlace2(places[1]);
+	}
+	
 	/**
 	 * Rendering the environment
 	 */
