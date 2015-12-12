@@ -83,22 +83,18 @@ public class Block {
 	 * @return
 	 */
 	public boolean isSatisfied() {
-		/*if(this.lowerBlock == null) {
-			return true;
-		}
-		
-		return this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed();*/
+
 		boolean satisfied = false;
-		
-		if(this.lowerBlock == null && this.lowerTargetBlock == null) {
+
+		if (this.lowerBlock == null && this.lowerTargetBlock == null) {
 			satisfied = true;
 		}
-		if(this.lowerBlock != null) {
-			if(this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed()) {
+		if (this.lowerBlock != null) {
+			if (this.lowerBlock.equals(this.lowerTargetBlock) && this.isPushed()) {
 				satisfied = true;
 			}
 		}
-		
+
 		return satisfied;
 	}
 
@@ -118,13 +114,13 @@ public class Block {
 		if (!this.isSatisfied() && this.isFree()) {
 			Random rand = new Random();
 			int randStack = rand.nextInt(2);
-			
-			if(randStack == 0) {
+
+			if (randStack == 0) {
 				randStack = this.place1;
 			} else {
 				randStack = this.place2;
 			}
-			
+
 			environment.moveBlock(this, randStack);
 		}
 	}
@@ -134,7 +130,7 @@ public class Block {
 	 */
 	public void perceive(Environment environment) {
 		environment.applyPerception(this);
-		//this.move(environment);
+		// this.move(environment);
 	}
 
 	/**

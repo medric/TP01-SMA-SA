@@ -1,10 +1,9 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Environment {
 	private ArrayList<Stack> stacks;
 	private ArrayList<Block> agents;
+	private int numIteration = 1;
 
 	/**
 	 * 
@@ -45,7 +44,7 @@ public class Environment {
 	}
 
 	/**
-	 * 
+	 * Apply perception
 	 * @param block
 	 */
 	public void applyPerception(Block block) {
@@ -88,13 +87,14 @@ public class Environment {
 			block.move(this);
 		}
 
+		System.out.print("---Iteration " + numIteration++ + " ---\n");
 		this.render();
 		
 		this.checkEndGame();
 	}
 
 	/**
-	 * 
+	 * Move block
 	 */
 	public void moveBlock(Block block, int toStack) {
 		int blockIndex = this.locateBlock(block);
@@ -127,7 +127,7 @@ public class Environment {
 	}
 
 	/**
-	 * 
+	 * Set block places
 	 * @param block
 	 */
 	private void setBlockPlaces(Block block) {
@@ -147,8 +147,12 @@ public class Environment {
 		block.setPlace2(places[1]);
 	}
 
+	/*
+	 * Check that targets are reached
+	 */
 	private void checkEndGame() {		
 		int res = 0;
+		int full = 0;
 		
 		for (int i = 0; i < this.agents.size(); i++) {
 			if(this.agents.get(i).isSatisfied()){
@@ -157,8 +161,20 @@ public class Environment {
 		}
 		
 		if (res == 3) {
-			System.out.println("---- END !!! ----");
-			System.exit(0);
+			
+			// Check that all blocks are on the same stack .
+			for (int i = 0; i < this.stacks.size(); i++) {
+				full = 0;
+				for (int j = this.stacks.get(i).getBlocks().size() - 1; j >= 0; j--) {
+					if(this.stacks.get(i).getBlocks().get(j) != null) {
+						full++;
+					}
+				}
+				if(full == 4) {
+					System.out.println("---- END OF GAME ! ----");
+					System.exit(0);
+				}
+			}
 		}
 	}
 
@@ -182,7 +198,5 @@ public class Environment {
 				System.out.println();
 			}
 		}
-
-		System.out.print("-----------------------------------Iteration suivante-----------------------------------\n");
 	}
 }
