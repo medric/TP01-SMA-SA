@@ -130,7 +130,6 @@ public class Block {
 	 */
 	public void perceive(Environment environment) {
 		environment.applyPerception(this);
-		// this.move(environment);
 	}
 
 	/**
